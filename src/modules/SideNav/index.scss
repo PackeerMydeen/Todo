@@ -1,0 +1,15 @@
+.sider-wrapper {
+  .ant-layout-sider-children {
+    display: flex;
+  }
+  .left-sider {
+    width: 50%;
+  }
+  .right-sider {
+    width: 80%;
+    background-color: white;
+    .workspace-text {
+      font-size: 2rem;
+    }
+  }
+}
