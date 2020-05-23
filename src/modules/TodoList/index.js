@@ -3,6 +3,7 @@ import "./index.scss";
 import { Popover } from "antd";
 import StatusCard from "../StatusCard";
 import * as utils from "../../utils";
+import AddTodo from "../AddTodo";
 
 let columns = ["Title", "Owner", "DueDate", "Status"];
 
@@ -81,7 +82,7 @@ export default function TodoList(props) {
                 {rows[item].map((todos, i) =>
                   todos.data.map((data, index) => {
                     console.log(utils.getStatus(data.Status));
-                    let getStatus = utils.getStatus(data.Status);
+                    let getStatus = utils.getStatus(Number(data.Status));
                     return (
                       <tr
                         key={index + `${cols}`}
@@ -91,7 +92,7 @@ export default function TodoList(props) {
                         onDrop={handleRowOnDrop}
                         onDragOver={handleDragOver}
                       >
-                        {cols.map((col) => (
+                        {cols.map((col, colIndex) => (
                           <Popover
                             visible={
                               col === "Status" &&
@@ -146,6 +147,7 @@ export default function TodoList(props) {
           })}
         </tbody>
       </table>
+      <AddTodo columns={columns} addTodo={(e) => props.addTodo(e)} />
     </div>
   );
 }

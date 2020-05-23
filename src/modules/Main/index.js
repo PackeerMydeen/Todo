@@ -22,6 +22,18 @@ let todos = {
         {
           Title: "Tasks 2",
           Owner: "Veena",
+          Status: 3,
+          DueDate: "19-04-2020",
+        },
+        {
+          Title: "Tasks 3",
+          Owner: "Mydeen",
+          DueDate: "14-04-2020",
+          Status: 2,
+        },
+        {
+          Title: "Groupinh",
+          Owner: "Dev",
           DueDate: "19-04-2020",
         },
       ],
@@ -42,6 +54,11 @@ function Main() {
     temptodo[key[0]][key[1]].data[key[2]].Status = status.id;
     setTodo(temptodo);
   };
+  const addTodo = (el) => {
+    const temptodo = { ...todoData };
+    temptodo.WebDesign[0].data.push(el);
+    setTodo(temptodo);
+  };
   return (
     <Layout className="main-wrapper">
       <SideNav collapsed={collapsed} toggle={toggle} />
@@ -57,6 +74,7 @@ function Main() {
             todoData={todoData}
             setTodo={(e) => setTodo(e)}
             updateStatus={updateStatus}
+            addTodo={addTodo}
           />
         </Content>
       </Layout>

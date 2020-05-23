@@ -19,6 +19,11 @@ export const Status = [
     name: "Stuck",
     color: "#e3445a",
   },
+  {
+    id: 5,
+    name: "Review",
+    color: "#599bf8",
+  },
 ];
 
 export const getStatus = (id) => {

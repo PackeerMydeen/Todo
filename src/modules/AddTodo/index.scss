@@ -1,0 +1,42 @@
+.add-todo-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-left: 0.2rem;
+
+  .add-box {
+    font-size: 14px;
+    vertical-align: center;
+    padding: 20px;
+    padding: 8px;
+    width: 7rem;
+    background-color: #ffffff;
+    border: 1px solid #f5f6f8;
+    border-left: 6px solid #599bf8;
+    width: 50.5rem;
+    cursor: pointer;
+  }
+  .add-inputs {
+    display: flex;
+    align-items: center;
+    .add-input-box {
+      font-size: 14px;
+      vertical-align: center;
+      padding: 20px;
+      padding: 8px;
+      background-color: #ffffff;
+      border: 1px solid #f5f6f8;
+      padding: 8px;
+      width: 7rem;
+      margin-right: 0.2rem;
+    }
+    .add-input-box:first-child {
+      width: 27rem;
+      text-align: left;
+      border-left: 6px solid #599bf8;
+    }
+    .statuscol {
+      width: 9rem;
+      color: white;
+    }
+  }
+}
