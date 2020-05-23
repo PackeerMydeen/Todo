@@ -1,5 +1,8 @@
 .main-wrapper {
   height: 100%;
+  .ant-layout {
+    background-color: white !important;
+  }
   #components-layout-demo-custom-trigger .trigger {
     font-size: 18px;
     line-height: 64px;
@@ -16,9 +19,5 @@
     height: 32px;
     background: rgba(255, 255, 255, 0.2);
     margin: 16px;
-  }
-
-  .site-layout .site-layout-background {
-    background: #fff;
   }
 }

@@ -1,15 +1,27 @@
 .sider-wrapper {
   .ant-layout-sider-children {
     display: flex;
+    background-color: #2a2f4d;
+    border-right: 0.7px solid #e6e6e6;
   }
   .left-sider {
-    width: 50%;
+    width: 20%;
   }
   .right-sider {
     width: 80%;
     background-color: white;
     .workspace-text {
-      font-size: 2rem;
+      padding: 0.5rem 1rem;
+      font-size: 1.2rem;
+      color: #646464;
+      font-weight: 600;
     }
+    .search-text {
+      padding: 0 1rem;
+      color: #646464;
+    }
+  }
+  .anticon {
+    width: 0;
   }
 }

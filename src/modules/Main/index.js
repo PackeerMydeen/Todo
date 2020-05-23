@@ -1,51 +1,58 @@
 import React, { useState } from "react";
 
 import "./index.scss";
-import { Layout, Menu } from "antd";
-import { MenuUnfoldOutlined, MenuFoldOutlined } from "@ant-design/icons";
+import { Layout } from "antd";
+
 import SideNav from "../SideNav";
+import Headers from "../Headers";
+import TodoList from "../TodoList";
+const { Content } = Layout;
 
-const { Header, Sider, Content } = Layout;
+let todos = {
+  WebDesign: {
+    0: {
+      name: "Things To Do",
+      data: [
+        {
+          task_name: "Tasks 1",
+          owner: "packeer",
+          status: 1,
+          due_date: "19-04-2020",
+        },
+        {
+          task_name: "Tasks 2",
+          owner: "Veena",
+          status: 1,
+          due_date: "19-04-2020",
+        },
+      ],
+    },
+  },
+};
+function Main() {
+  const [collapsed, setCollapsed] = useState(false);
+  const [todoData, setTodo] = useState(todos);
 
-class Main extends React.Component {
-  state = {
-    collapsed: false,
+  const toggle = () => {
+    setCollapsed((collapsed) => !collapsed);
   };
 
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
-  };
-
-  render() {
-    return (
-      <Layout className="main-wrapper">
-        <SideNav collapsed={this.state.collapsed} />
-        <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 }}>
-            {React.createElement(
-              this.state.collapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
-              {
-                className: "trigger",
-                onClick: this.toggle,
-              }
-            )}
-          </Header>
-          <Content
-            className="site-layout-background"
-            style={{
-              margin: "24px 16px",
-              padding: 24,
-              minHeight: 280,
-            }}
-          >
-            Content
-          </Content>
-        </Layout>
+  return (
+    <Layout className="main-wrapper">
+      <SideNav collapsed={collapsed} toggle={toggle} />
+      <Layout className="site-layout">
+        <Headers />
+        <Content
+          style={{
+            padding: 24,
+            backgroundColor: "ffffff",
+          }}
+        >
+          <TodoList todoData={todoData} />
+        </Content>
       </Layout>
-    );
-  }
+    </Layout>
+  );
 }
 
 export default Main;
