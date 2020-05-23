@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import generateData from "./generate-data";
+import React, { useState, Fragment } from "react";
+import "./index.scss";
+import { Popover } from "antd";
+import StatusCard from "../StatusCard";
+import * as utils from "../../utils";
 
-const { columns, data } = generateData(5);
+let columns = ["Title", "Owner", "DueDate", "Status"];
 
 export default function TodoList(props) {
   const [cols, setCols] = useState(columns);
-  const [rows, setRows] = useState(data);
+  const [rows, setRows] = useState(props.todoData);
+  const [popupId, setPopup] = useState(null);
 
   const handleDragStart = (e) => {
     const { id } = e.target;
@@ -13,7 +17,9 @@ export default function TodoList(props) {
     e.dataTransfer.setData("colIdx", idx);
   };
 
-  const handleDragOver = (e) => e.preventDefault();
+  const handleDragOver = (e) => {
+    e.preventDefault();
+  };
 
   const handleOnDrop = (e) => {
     const draggedColIdx = e.dataTransfer.getData("colIdx");
@@ -33,24 +39,28 @@ export default function TodoList(props) {
   };
 
   const handleRowOnDrop = (e) => {
-    console.log(e);
     const { id } = e.target;
-    const droppedColIdx = rows && rows[id];
-    const draggedColIdx = e.dataTransfer.getData("rowIdx");
-    console.log("a-", droppedColIdx, "b-", draggedColIdx);
-    if (droppedColIdx && draggedColIdx === "") return;
-    const tempRows = [...rows];
-    tempRows[draggedColIdx] = droppedColIdx;
-    tempRows[id] = rows[draggedColIdx];
+    let key = id.split("-");
+    const droppedColIdx = rows[key[0]][key[1]].data[key[2]];
+    const draggedIndex = e.dataTransfer.getData("rowIdx").split("-");
+    if (draggedIndex.length === 1) return;
+    const draggedRow =
+      rows[draggedIndex[0]][draggedIndex[1]].data[draggedIndex[2]];
+    const tempRows = { ...rows };
+    tempRows[key[0]][key[1]].data[key[2]] = draggedRow;
+    tempRows[draggedIndex[0]][draggedIndex[1]].data[
+      draggedIndex[2]
+    ] = droppedColIdx;
     setRows(tempRows);
+    props.setTodo(rows);
   };
 
   return (
-    <div className="App">
+    <div className="todo-list-wrapper">
       <table>
         <thead>
           <tr>
-            {cols.map((col) => (
+            {cols.map((col, index) => (
               <th
                 id={col}
                 key={col}
@@ -65,22 +75,75 @@ export default function TodoList(props) {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
-            <tr
-              key={index}
-              id={index}
-              draggable
-              onDragStart={handleDragRowStart}
-              onDragOver={handleDragOver}
-              onDrop={handleRowOnDrop}
-            >
-              {Object.entries(row).map(([k, v], idx) => (
-                <td key={v} id={index}>
-                  {row[cols[idx]]}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {Object.keys(rows).map((item) => {
+            return (
+              <Fragment key={item}>
+                {rows[item].map((todos, i) =>
+                  todos.data.map((data, index) => {
+                    console.log(utils.getStatus(data.Status));
+                    let getStatus = utils.getStatus(data.Status);
+                    return (
+                      <tr
+                        key={index + `${cols}`}
+                        id={`${item}-${i}-${index}`}
+                        draggable
+                        onDragStart={handleDragRowStart}
+                        onDrop={handleRowOnDrop}
+                        onDragOver={handleDragOver}
+                      >
+                        {cols.map((col) => (
+                          <Popover
+                            visible={
+                              col === "Status" &&
+                              popupId === `${item}-${i}-${index}`
+                            }
+                            key={col}
+                            placement="bottom"
+                            content={
+                              <div>
+                                <StatusCard
+                                  selected={data.Status}
+                                  updateStatus={(e) => {
+                                    props.updateStatus(
+                                      `${item}-${i}-${index}`,
+                                      e
+                                    );
+                                    setPopup(null);
+                                  }}
+                                />
+                                <a onClick={() => setPopup(null)}>Close</a>
+                              </div>
+                            }
+                            trigger="click"
+                          >
+                            <td
+                              className={col === "Status" ? "statuscol" : null}
+                              key={col}
+                              id={`${item}-${i}-${index}`}
+                              style={{
+                                backgroundColor:
+                                  col === "Status"
+                                    ? getStatus && getStatus.color
+                                    : null,
+                              }}
+                              onClick={() =>
+                                col === "Status" &&
+                                setPopup(`${item}-${i}-${index}`)
+                              }
+                            >
+                              {col !== "Status"
+                                ? data[col]
+                                : getStatus && getStatus.name}
+                            </td>
+                          </Popover>
+                        ))}
+                      </tr>
+                    );
+                  })
+                )}
+              </Fragment>
+            );
+          })}
         </tbody>
       </table>
     </div>

@@ -9,25 +9,24 @@ import TodoList from "../TodoList";
 const { Content } = Layout;
 
 let todos = {
-  WebDesign: {
-    0: {
+  WebDesign: [
+    {
       name: "Things To Do",
       data: [
         {
-          task_name: "Tasks 1",
-          owner: "packeer",
-          status: 1,
-          due_date: "19-04-2020",
+          Title: "Tasks 1",
+          Owner: "packeer",
+          Status: 1,
+          DueDate: "19-04-2020",
         },
         {
-          task_name: "Tasks 2",
-          owner: "Veena",
-          status: 1,
-          due_date: "19-04-2020",
+          Title: "Tasks 2",
+          Owner: "Veena",
+          DueDate: "19-04-2020",
         },
       ],
     },
-  },
+  ],
 };
 function Main() {
   const [collapsed, setCollapsed] = useState(false);
@@ -37,6 +36,12 @@ function Main() {
     setCollapsed((collapsed) => !collapsed);
   };
 
+  const updateStatus = (el, status) => {
+    let key = el.split("-");
+    const temptodo = { ...todoData };
+    temptodo[key[0]][key[1]].data[key[2]].Status = status.id;
+    setTodo(temptodo);
+  };
   return (
     <Layout className="main-wrapper">
       <SideNav collapsed={collapsed} toggle={toggle} />
@@ -48,7 +53,11 @@ function Main() {
             backgroundColor: "ffffff",
           }}
         >
-          <TodoList todoData={todoData} />
+          <TodoList
+            todoData={todoData}
+            setTodo={(e) => setTodo(e)}
+            updateStatus={updateStatus}
+          />
         </Content>
       </Layout>
     </Layout>
