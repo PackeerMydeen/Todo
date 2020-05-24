@@ -1,10 +1,6 @@
 import React from "react";
 import { Layout } from "antd";
-import {
-  HomeOutlined,
-  DownloadOutlined,
-  BellOutlined,
-} from "@ant-design/icons";
+import { HomeFilled, DownloadOutlined, BellOutlined } from "@ant-design/icons";
 import "./index.scss";
 
 const { Sider } = Layout;
@@ -32,7 +28,7 @@ export default function SideNav({ collapsed, toggle }) {
         <div className="search-text">Filter boards...</div>
         <div className="main-container">
           <div>
-            <HomeOutlined style={{ fontSize: "1.5rem" }} />
+            <HomeFilled style={{ fontSize: "1.5rem", color: "#0186ff" }} />
           </div>
 
           <div className="main-text">Main</div>
