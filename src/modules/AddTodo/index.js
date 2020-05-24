@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 import { Input, Button, Popover } from "antd";
 import StatusCard from "../StatusCard";
 import * as utils from "../../utils";
