@@ -37,6 +37,13 @@
     .statuscol {
       width: 9rem;
       color: white;
+      height: 3rem;
+    }
+    .status-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
     }
   }
 }

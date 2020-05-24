@@ -81,7 +81,6 @@ export default function TodoList(props) {
               <Fragment key={item}>
                 {rows[item].map((todos, i) =>
                   todos.data.map((data, index) => {
-                    console.log(utils.getStatus(data.Status));
                     let getStatus = utils.getStatus(Number(data.Status));
                     return (
                       <tr
