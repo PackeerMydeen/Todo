@@ -1,12 +1,12 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import { Input, Button, Popover } from "antd";
 import StatusCard from "../StatusCard";
 import * as utils from "../../utils";
 import "./index.scss";
 
-export default function AddTodo({ columns, addTodo }) {
+export default function AddTodo({ columns, addTodo, isShowAdd }) {
   const [add, setadd] = useState({});
-  const [isShow, setShow] = useState(false);
+  const [isShow, setShow] = useState(isShowAdd);
   const [isPopOver, setPopOver] = useState(false);
 
   const validate = useMemo(() => {
@@ -21,7 +21,7 @@ export default function AddTodo({ columns, addTodo }) {
           {columns.map((el) => {
             let getStatus = add.Status && utils.getStatus(Number(add.Status));
             return (
-              <div
+              <td
                 key={el}
                 onClick={() =>
                   el === "Status" && isPopOver !== true && setPopOver(true)
@@ -72,7 +72,7 @@ export default function AddTodo({ columns, addTodo }) {
                     {getStatus && getStatus.name}
                   </div>
                 )}
-              </div>
+              </td>
             );
           })}
           <Button

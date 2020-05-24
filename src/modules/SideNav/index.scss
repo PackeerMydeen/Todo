@@ -6,6 +6,14 @@
   }
   .left-sider {
     width: 20%;
+    .left-sider-icons {
+      margin-right: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 1rem;
+    }
   }
   .right-sider {
     width: 80%;
@@ -19,6 +27,19 @@
     .search-text {
       padding: 0 1rem;
       color: #646464;
+    }
+    .main-container {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      margin-left: 1rem;
+      margin-top: 1rem;
+      .main-text {
+        font-size: 1.2rem;
+        color: #646464;
+        font-weight: 600;
+        margin-left: 2rem;
+      }
     }
   }
   .anticon {
