@@ -11,7 +11,6 @@ export default function TodoList(props) {
   const [cols, setCols] = useState(columns);
   const [rows, setRows] = useState(props.todoData);
   const [popupId, setPopup] = useState(null);
-  const [selectedRow, setSelected] = useState(null);
 
   const handleDragStart = (e) => {
     const { id } = e.target;
@@ -43,6 +42,7 @@ export default function TodoList(props) {
   const handleRowOnDrop = (e) => {
     const { id } = e.target;
     let key = id.split("-");
+    if (key.length === 1) return;
     const droppedColIdx = rows[key[0]][key[1]].data[key[2]];
     const draggedIndex = e.dataTransfer.getData("rowIdx").split("-");
     if (draggedIndex.length === 1) return;
@@ -92,63 +92,54 @@ export default function TodoList(props) {
                         onDrop={handleRowOnDrop}
                         onDragOver={handleDragOver}
                       >
-                        {selectedRow === `${item}-${i}-${index}` ? (
-                          <AddTodo columns={columns} isShowAdd={true} />
-                        ) : (
-                          <>
-                            {cols.map((col, colIndex) => (
-                              <Popover
-                                visible={
-                                  col === "Status" &&
-                                  popupId === `${item}-${i}-${index}`
-                                }
-                                key={col}
-                                placement="bottom"
-                                content={
-                                  <div>
-                                    <StatusCard
-                                      selected={data.Status}
-                                      updateStatus={(e) => {
-                                        props.updateStatus(
-                                          `${item}-${i}-${index}`,
-                                          e
-                                        );
-                                        setPopup(null);
-                                      }}
-                                    />
-                                    <a onClick={() => setPopup(null)}>Close</a>
-                                  </div>
-                                }
-                                trigger="click"
-                              >
-                                <td
-                                  className={
-                                    col === "Status" ? "statuscol" : null
-                                  }
-                                  key={col}
-                                  id={`${item}-${i}-${index}`}
-                                  style={{
-                                    backgroundColor:
-                                      col === "Status"
-                                        ? getStatus && getStatus.color
-                                        : null,
+                        {cols.map((col, colIndex) => (
+                          <Popover
+                            visible={
+                              col === "Status" &&
+                              popupId === `${item}-${i}-${index}`
+                            }
+                            key={col}
+                            placement="bottom"
+                            content={
+                              <div>
+                                <StatusCard
+                                  selected={data.Status}
+                                  updateStatus={(e) => {
+                                    props.updateStatus(
+                                      `${item}-${i}-${index}`,
+                                      e
+                                    );
+                                    setPopup(null);
                                   }}
-                                  onClick={() => {
-                                    col === "Status"
-                                      ? setPopup(`${item}-${i}-${index}`)
-                                      : setSelected(`${item}-${i}-${index}`);
-                                  }}
-                                >
-                                  <span>
-                                    {col !== "Status"
-                                      ? data[col]
-                                      : getStatus && getStatus.name}
-                                  </span>
-                                </td>
-                              </Popover>
-                            ))}
-                          </>
-                        )}
+                                />
+                                <a onClick={() => setPopup(null)}>Close</a>
+                              </div>
+                            }
+                            trigger="click"
+                          >
+                            <td
+                              className={col === "Status" ? "statuscol" : null}
+                              key={col}
+                              id={`${item}-${i}-${index}`}
+                              style={{
+                                backgroundColor:
+                                  col === "Status"
+                                    ? getStatus && getStatus.color
+                                    : null,
+                              }}
+                              onClick={() => {
+                                col === "Status" &&
+                                  setPopup(`${item}-${i}-${index}`);
+                              }}
+                            >
+                              <span>
+                                {col !== "Status"
+                                  ? data[col]
+                                  : getStatus && getStatus.name}
+                              </span>
+                            </td>
+                          </Popover>
+                        ))}
                       </tr>
                     );
                   })
