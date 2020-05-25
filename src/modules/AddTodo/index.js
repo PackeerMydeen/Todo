@@ -21,7 +21,7 @@ export default function AddTodo({ columns, addTodo, isShowAdd }) {
           {columns.map((el) => {
             let getStatus = add.Status && utils.getStatus(Number(add.Status));
             return (
-              <td
+              <div
                 key={el}
                 onClick={() =>
                   el === "Status" && isPopOver !== true && setPopOver(true)
@@ -72,7 +72,7 @@ export default function AddTodo({ columns, addTodo, isShowAdd }) {
                     {getStatus && getStatus.name}
                   </div>
                 )}
-              </td>
+              </div>
             );
           })}
           <Button
